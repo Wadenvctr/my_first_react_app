@@ -4,35 +4,26 @@ import { useState } from 'react';
 // import PostItem from './components/PostItem';
 import './styles/App.css';
 import PostList from './components/PostList';
+import MyButton from './components/UI/button/MyButton';
+import MyInput from './components/UI/input/MyInput';
 //import Counter from "./components/counter";
 function App() {
-  const [posts, setPosts] = useState([
-    {id:1, title:'Javascript', body: 'Description'},
-    {id:2, title:'Javascript2', body: 'Description'},
-    {id:3, title:'Javascript3', body: 'Description'}
+  const [posts/*, setPosts*/] = useState([
+    {id:1, title:'Javascript', body: 'тут можно засунуть сколько угодно длинное описание'},
+    {id:2, title:'Javascript2', body: 'тут тоже'},
+    {id:3, title:'Javascript3', body: 'и даже тут'},
   ])
+  
 
   return (
     <div className="App">
-      <PostList posts={posts} title={'Список постоВ'}/>
+      <form>
+        <MyInput type='text' placeholder='Name of post'/>
+        <MyInput type='text' placeholder='description of post'/>
+        <MyButton>Создать пост</MyButton>
+      </form>
+      <PostList posts={posts} title={'Список постов, текст меняется динамически из App.js'}/>
     </div>
-
-    // <div className="App">
-    //   <header className="App-header">
-    //     <img src={logo} className="App-logo" alt="logo" />
-    //     <p>
-    //       Edit <code>src/App.js</code> and save to reload.
-    //     </p>
-    //     <a
-    //       className="App-link"
-    //       href="https://reactjs.org"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       Learn React
-    //     </a>
-    //   </header>
-    // </div>
   );
 }
 
