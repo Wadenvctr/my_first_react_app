@@ -1,25 +1,22 @@
 // import logo from './logo.svg';
-import { useState } from "react";
-import "./App.css";
+//import "./App.css";
+import { useState } from 'react';
+// import PostItem from './components/PostItem';
+import './styles/App.css';
+import PostList from './components/PostList';
+//import Counter from "./components/counter";
 function App() {
-  const [text, setText] = useState("");
-
-  const sendMessage = () => {
-    console.log(text);
-    // тут пишетвсся логика для отправки на бэк
-  };
+  const [posts, setPosts] = useState([
+    {id:1, title:'Javascript', body: 'Description'},
+    {id:2, title:'Javascript2', body: 'Description'},
+    {id:3, title:'Javascript3', body: 'Description'}
+  ])
 
   return (
-    <div>
-      <h1 className="green_text">{text}</h1>
-      <input
-        type="text"
-        value={text}
-        placeholder="WriteHere"
-        onChange={(event) => setText(event.target.value)}
-      />
-      <button onClick={sendMessage}>send message</button>
+    <div className="App">
+      <PostList posts={posts} title={'Список постоВ'}/>
     </div>
+
     // <div className="App">
     //   <header className="App-header">
     //     <img src={logo} className="App-logo" alt="logo" />
