@@ -53,7 +53,7 @@ function App() {
           title="Список постов, текст меняется динамически из App.js"
         />
       :
-        <h1 style={{ textAlign: "center" }}>Посты не найдены</h1>
+        <h1 style={{ textAlign: "center" }}>пиписька</h1>
       }
     </div>
   );
