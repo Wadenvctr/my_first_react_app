@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import "./styles/App.css";
 import PostList from "./components/PostList";
 import PostForm from "./components/PostForm";
-import MySelect from "./components/UI/select/MySelect";
+import PostFilter from "./components/PostFilter";
 function App() {
   const [posts, setPosts] = useState([
     {
@@ -23,38 +23,37 @@ function App() {
     setPosts(posts.filter((p) => p.id !== post.id));
   };
 
-  const [selectedSort, setSelectedSort] = useState()
+  const [filter, setFilter] = useState({
+    sort: "",
+    query: "",
+  });
 
-  const sortPosts = (sort) => {
-    setSelectedSort(sort)
-    setPosts([...posts].sort((a,b) => a[sort].localeCompare(b[sort])))
-  }
+  const sortedPosts = useMemo(() => {
+    console.log("Отработал хук useMemo");
+    if (filter.sort) {
+      return [...posts].sort((a, b) =>
+        a[filter.sort].localeCompare(b[filter.sort])
+      );
+    }
+    return filter.sort;
+  }, [filter.sort, posts]);
+
+  const sortedAndSearchedPosts = useMemo(() => {
+    return sortedPosts.filter(post =>
+      post.title.toLowerCase().includes(filter.query.toLowerCase)
+    );
+  }, [filter.query, sortedPosts]);
 
   return (
     <div className="App">
       <PostForm create={createPost} />
-      <hr style={{margin: '15px'}}/>
-      <div>
-        <MySelect
-          value={selectedSort}
-          onChange={sortPosts}
-          defaultValue='Сортировка'
-          options={[
-            {value: 'title', name:'по названию'},
-            {value: 'body', name:'по описанию'},
-          ]}
-        />
-      </div>
-      {posts.length !== 0 
-      ?
-        <PostList
-          remove={removePost}
-          posts={posts}
-          title="Список постов, текст меняется динамически из App.js"
-        />
-      :
-        <h1 style={{ textAlign: "center" }}>Посты не найдены</h1>
-      }
+      <hr style={{ margin: "15px" }} />
+      <PostFilter filter={filter} setFilter={setFilter} />
+      <PostList
+        remove={removePost}
+        posts={sortedAndSearchedPosts}
+        title="Список постов, текст меняется динамически из App.js"
+      />
     </div>
   );
 }
