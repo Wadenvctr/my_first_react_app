@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import "./styles/App.css";
 import PostList from "./components/PostList";
 import PostForm from "./components/PostForm";
 import MySelect from "./components/UI/select/MySelect";
+import MyInput from "./components/UI/input/MyInput";
 function App() {
   const [posts, setPosts] = useState([
     {
@@ -23,33 +24,54 @@ function App() {
     setPosts(posts.filter((p) => p.id !== post.id));
   };
 
-  const [selectedSort, setSelectedSort] = useState()
+  const [selectedSort, setSelectedSort] = useState();
+  const [searchQuery, setSearchQuery] = useState();
+
+  const sortedPosts = useMemo(
+    () => {
+      console.log('Отработал хук useMemo')
+      if (selectedSort) {
+        return [...posts].sort((a, b) =>
+          a[selectedSort].localeCompare(b[selectedSort])
+        );
+      }
+      return posts;
+    }, [selectedSort, posts]
+  );
+
+  const sortedAndSearchedPosts = useMemo(() => {
+    return sortedPosts.filter(post => post.title.includes(searchQuery))
+  }, [searchQuery, sortedPosts])
 
   const sortPosts = (sort) => {
-    setSelectedSort(sort)
-    setPosts([...posts].sort((a,b) => a[sort].localeCompare(b[sort])))
-  }
+    setSelectedSort(sort);
+  };
 
   return (
     <div className="App">
       <PostForm create={createPost} />
-      <hr style={{margin: '15px'}}/>
+      <hr style={{ margin: "15px" }} />
       <div>
+        <MyInput
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Поиск..."
+        />
         <MySelect
           value={selectedSort}
           onChange={sortPosts}
-          defaultValue='Сортировка'
+          defaultValue="Сортировка"
           options={[
-            {value: 'title', name:'по названию'},
-            {value: 'body', name:'по описанию'},
+            { value: "title", name: "по названию" },
+            { value: "body", name: "по описанию" },
           ]}
         />
       </div>
-        <PostList
-          remove={removePost}
-          posts={posts}
-          title="Список постов, текст меняется динамически из App.js"
-        />
+      <PostList
+        remove={removePost}
+        posts={sortedAndSearchedPosts}
+        title="Список постов, текст меняется динамически из App.js"
+      />
     </div>
   );
 }
