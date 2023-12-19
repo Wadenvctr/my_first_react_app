@@ -35,12 +35,12 @@ function App() {
         a[filter.sort].localeCompare(b[filter.sort])
       );
     }
-    return filter.sort;
+    return posts;
   }, [filter.sort, posts]);
 
   const sortedAndSearchedPosts = useMemo(() => {
     return sortedPosts.filter(post =>
-      post.title.toLowerCase().includes(filter.query.toLowerCase)
+      post.title.toLowerCase().includes(filter.query.toLowerCase())
     );
   }, [filter.query, sortedPosts]);
 
