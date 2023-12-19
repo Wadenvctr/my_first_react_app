@@ -45,16 +45,11 @@ function App() {
           ]}
         />
       </div>
-      {posts.length !== 0 
-      ?
         <PostList
           remove={removePost}
           posts={posts}
           title="Список постов, текст меняется динамически из App.js"
         />
-      :
-        <h1 style={{ textAlign: "center" }}>пиписька</h1>
-      }
     </div>
   );
 }
