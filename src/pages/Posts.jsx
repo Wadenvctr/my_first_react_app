@@ -71,7 +71,7 @@ function Posts() {
         <PostList
         remove={removePost}
         posts={sortedAndSearchedPosts}
-        title="Список постов, текст меняется динамически из App.js"
+        title="Список постов"
       />
       }
       <Pagination
