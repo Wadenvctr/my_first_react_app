@@ -1,6 +1,7 @@
 import React from "react";
 import PostItem from './PostItem'
 import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { Link } from "react-router-dom";
 const PostList = ({posts, title, remove}) => {
   if(!posts.length) {
     return (
@@ -15,6 +16,7 @@ const PostList = ({posts, title, remove}) => {
       </h1>
       <TransitionGroup>
       {posts.map((post, index) => 
+        
         <CSSTransition
           key = {post.id}
           timeout = {500}
@@ -22,6 +24,7 @@ const PostList = ({posts, title, remove}) => {
         >
         <PostItem remove ={remove} number = {index+1} post={post}/>
         </CSSTransition>
+        
       )}
       </TransitionGroup>
     </div>
