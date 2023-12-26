@@ -1,10 +1,8 @@
 import React from "react";
 import MyButton from "./UI/button/MyButton";
-import {Link, useNavigate, useNavigation} from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 
 const PostItem = (props) => {
-  const router = useNavigate()
-  console.log(router)
   return (
     <div className="post">
       <div className="post__content">
@@ -13,14 +11,10 @@ const PostItem = (props) => {
         </strong>
         <div>{props.post.body}</div>
         <div className="post__btns">
-        <Link key={props.post.id} to={`${props.post.id}`}>
-        <MyButton>
-            Открыть
-          </MyButton>
-        </Link>
-          <MyButton onClick={() => props.remove(props.post)}>
-            Удалить
-          </MyButton>
+          <Link key={props.post.id} to={`${props.post.id}`}>
+            <MyButton>Открыть</MyButton>
+          </Link>
+          <MyButton onClick={() => props.remove(props.post)}>Удалить</MyButton>
         </div>
       </div>
     </div>
